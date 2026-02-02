@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Personal Translate",
+    "slug": "personal-translate",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "plugins": [
+      [
+        "expo-speech-transcriber",
+        {
+          "microphonePermission": "Permita acesso ao microfone para gravar áudio.",
+          "speechRecognitionPermission": "Permita reconhecimento de fala para transcrição offline."
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jonnywf.personaltranslate"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.jonnywf.personaltranslate"
+    }
+  }
+}
