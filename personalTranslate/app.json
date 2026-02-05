@@ -11,8 +11,8 @@
       [
         "expo-speech-recognition",
         {
-          "microphonePermission": "Permita acesso ao microfone para gravar áudio.",
-          "speechRecognitionPermission": "Permita reconhecimento de fala para transcrição offline."
+          "microphonePermission": "Usamos o microfone para capturar sua fala em inglês.",
+          "speechRecognitionPermission": "Usamos reconhecimento de fala para transcrever offline."
         }
       ]
     ],
@@ -29,11 +29,6 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.jonnywf.personaltranslate"
-    },
-    "extra": {
-      "eas": {
-        "projectId": "9905fc26-abd8-4bb2-a077-06d9c2c86e22"
-      }
     }
   }
 }

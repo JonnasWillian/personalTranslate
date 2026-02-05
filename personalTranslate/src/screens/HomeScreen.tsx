@@ -1,95 +1,155 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button, StyleSheet, Alert, ActivityIndicator } from 'react-native';
-import * as Speech from 'expo-speech';
-import { startSTT, stopSTT, useTranscription } from '../services/STTService'; // ajuste o path
-import { translate } from '../services/TranslationService'; // ajuste o path
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Ionicons } from '@expo/vector-icons';
 
 export default function HomeScreen() {
-  const [transcribed, setTranscribed] = useState<string>('');
-  const [translated, setTranslated] = useState<string>('');
-  const [isProcessing, setIsProcessing] = useState(false);
-
-  const { text, isFinal, error, isRecording } = useTranscription(); // Hook principal para resultados reais
-
-  useEffect(() => {
-    setTranscribed(text || '');
-    if (isFinal && text?.trim()) {
-      // Traduz automaticamente ao finalizar frase
-      translate(text.trim(), 'en', 'pt-BR').then(setTranslated);
-    }
-  }, [text, isFinal]);
-
-  useEffect(() => {
-    if (error) {
-      Alert.alert('Erro no reconhecimento', error || 'Erro desconhecido');
-    }
-  }, [error]);
-
-  const handleStartStop = async () => {
-    if (isRecording) {
-      // Parar
-      setIsProcessing(true);
-      await stopSTT();
-      setIsProcessing(false);
-    } else {
-      // Iniciar
-      setIsProcessing(true);
-      setTranscribed('');
-      setTranslated('');
-      try {
-        await startSTT(); // Sem params extras
-      } catch (err) {
-        Alert.alert('Erro', 'Falha ao iniciar gravação/STT.');
-      }
-      setIsProcessing(false);
-    }
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Transcreva Inglês → Português</Text>
+    <LinearGradient
+      colors={['#0f0c29', '#302b63', '#24243e']}
+      style={styles.gradient}
+    >
+      <StatusBar backgroundColor="transparent" translucent />
 
-      <View style={styles.display}>
-        <Text style={styles.label}>O que foi dito (inglês):</Text>
-        <Text style={styles.text}>{transcribed || '...'}</Text>
+      {/* Conteúdo central */}
+      <View style={styles.content}>
+        {/* Logo ou ícone grande */}
+        <View style={styles.iconContainer}>
+          <Ionicons name="mic-circle" size={140} color="#00d4ff" />
+          <Ionicons name="language" size={80} color="#00d4ff" style={styles.languageIcon} />
+        </View>
 
-        <Text style={styles.label}>Traduzido (português):</Text>
-        <Text style={styles.text}>{translated || '...'}</Text>
+        {/* Título principal */}
+        <Text style={styles.title}>Personal Translate</Text>
+
+        {/* Subtítulo impactante */}
+        <Text style={styles.subtitle}>
+          Fale em inglês. Ouça em português.{'\n'}
+          <Text style={styles.subtitleHighlight}>Offline • Rápido • Inteligente</Text>
+        </Text>
+
+        {/* Descrição curta */}
+        <Text style={styles.description}>
+          Grave sua voz em inglês e ouça a tradução instantânea em português brasileiro.
+        </Text>
+
+        {/* Botão principal chamativo */}
+        <TouchableOpacity style={styles.startButton} activeOpacity={0.8}>
+          <Text style={styles.startButtonText}>Começar a Falar</Text>
+          <Ionicons name="mic" size={24} color="#fff" style={{ marginLeft: 10 }} />
+        </TouchableOpacity>
+
+        {/* Informações adicionais */}
+        <View style={styles.infoRow}>
+          <View style={styles.infoItem}>
+            <Ionicons name="cloud-off" size={20} color="#00d4ff" />
+            <Text style={styles.infoText}>100% Offline</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <Ionicons name="flash" size={20} color="#00d4ff" />
+            <Text style={styles.infoText}>Instantâneo</Text>
+          </View>
+          <View style={styles.infoItem}>
+            <Ionicons name="shield-checkmark" size={20} color="#00d4ff" />
+            <Text style={styles.infoText}>Privacidade Total</Text>
+          </View>
+        </View>
       </View>
 
-      {isProcessing ? (
-        <ActivityIndicator size="large" color="#007AFF" />
-      ) : (
-        <>
-          <Button
-            title={isRecording ? "Gravando... (toque para parar)" : "Iniciar Gravação"}
-            onPress={handleStartStop}
-            color={isRecording ? "#FF3B30" : "#007AFF"}
-          />
-
-          {translated ? (
-            <View style={{ marginTop: 20 }}>
-              <Button
-                title="Ouvir novamente"
-                onPress={() => Speech.speak(translated, { language: 'pt-BR' })}
-              />
-            </View>
-          ) : null}
-        </>
-      )}
-
-      <Text style={styles.note}>
-        Nota: Funciona melhor offline após baixar modelos (Android: Configurações - Sistema - Idiomas - Reconhecimento offline). Use development build para testar (não Expo Go).
-      </Text>
-    </View>
+      {/* Rodapé discreto */}
+      <Text style={styles.footer}>Toque para iniciar • Powered by Expo</Text>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, backgroundColor: '#fff', justifyContent: 'center' },
-  title: { fontSize: 24, fontWeight: 'bold', marginBottom: 30, textAlign: 'center' },
-  display: { marginBottom: 40, minHeight: 180 },
-  label: { fontSize: 16, color: '#666', marginTop: 16 },
-  text: { fontSize: 18, marginTop: 8, padding: 12, backgroundColor: '#f0f0f0', borderRadius: 8 },
-  note: { marginTop: 40, fontSize: 12, color: '#888', textAlign: 'center' },
+  gradient: {
+    flex: 1,
+  },
+  content: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 30,
+  },
+  iconContainer: {
+    position: 'relative',
+    marginBottom: 30,
+  },
+  languageIcon: {
+    position: 'absolute',
+    bottom: -10,
+    right: -10,
+  },
+  title: {
+    fontSize: 42,
+    fontWeight: 'bold',
+    color: '#ffffff',
+    marginBottom: 12,
+    textAlign: 'center',
+    letterSpacing: 1.2,
+    textShadowColor: 'rgba(0, 212, 255, 0.6)',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+  },
+  subtitle: {
+    fontSize: 20,
+    color: '#e0f7ff',
+    textAlign: 'center',
+    marginBottom: 16,
+    lineHeight: 28,
+  },
+  subtitleHighlight: {
+    color: '#00d4ff',
+    fontWeight: 'bold',
+  },
+  description: {
+    fontSize: 16,
+    color: '#b0e0ff',
+    textAlign: 'center',
+    marginBottom: 40,
+    lineHeight: 24,
+  },
+  startButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#00d4ff',
+    paddingVertical: 18,
+    paddingHorizontal: 40,
+    borderRadius: 50,
+    marginBottom: 40,
+    shadowColor: '#00d4ff',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.5,
+    shadowRadius: 15,
+    elevation: 10,
+  },
+  startButtonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#0f0c29',
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginBottom: 40,
+  },
+  infoItem: {
+    alignItems: 'center',
+  },
+  infoText: {
+    fontSize: 14,
+    color: '#b0e0ff',
+    marginTop: 8,
+  },
+  footer: {
+    fontSize: 14,
+    color: '#777',
+    textAlign: 'center',
+    position: 'absolute',
+    bottom: 30,
+    width: '100%',
+  },
 });
