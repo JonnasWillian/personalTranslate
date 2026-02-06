@@ -1,6 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { View, Text, TouchableOpacity, StyleSheet, StatusBar, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -10,37 +9,30 @@ export default function HomeScreen() {
       colors={['#0f0c29', '#302b63', '#24243e']}
       style={styles.gradient}
     >
-      <StatusBar backgroundColor="transparent" translucent />
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
 
-      {/* Conteúdo central */}
       <View style={styles.content}>
-        {/* Logo ou ícone grande */}
         <View style={styles.iconContainer}>
           <Ionicons name="mic-circle" size={140} color="#00d4ff" />
           <Ionicons name="language" size={80} color="#00d4ff" style={styles.languageIcon} />
         </View>
 
-        {/* Título principal */}
         <Text style={styles.title}>Personal Translate</Text>
 
-        {/* Subtítulo impactante */}
         <Text style={styles.subtitle}>
           Fale em inglês. Ouça em português.{'\n'}
           <Text style={styles.subtitleHighlight}>Offline • Rápido • Inteligente</Text>
         </Text>
 
-        {/* Descrição curta */}
         <Text style={styles.description}>
           Grave sua voz em inglês e ouça a tradução instantânea em português brasileiro.
         </Text>
 
-        {/* Botão principal chamativo */}
         <TouchableOpacity style={styles.startButton} activeOpacity={0.8}>
           <Text style={styles.startButtonText}>Começar a Falar</Text>
           <Ionicons name="mic" size={24} color="#fff" style={{ marginLeft: 10 }} />
         </TouchableOpacity>
 
-        {/* Informações adicionais */}
         <View style={styles.infoRow}>
           <View style={styles.infoItem}>
             <Ionicons name="cloud-off" size={20} color="#00d4ff" />
@@ -57,7 +49,6 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      {/* Rodapé discreto */}
       <Text style={styles.footer}>Toque para iniciar • Powered by Expo</Text>
     </LinearGradient>
   );
