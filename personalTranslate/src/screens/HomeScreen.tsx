@@ -20,12 +20,12 @@ export default function HomeScreen() {
         <Text style={styles.title}>Personal Translate</Text>
 
         <Text style={styles.subtitle}>
-          Fale em inglês. Ouça em português.{'\n'}
+          Fale em português. Ouça em inglês.{'\n'}
           <Text style={styles.subtitleHighlight}>Offline • Rápido • Inteligente</Text>
         </Text>
 
         <Text style={styles.description}>
-          Grave sua voz em inglês e ouça a tradução instantânea em português brasileiro.
+          Grave sua voz em português e ouça a tradução instantânea em inglês.
         </Text>
 
         <TouchableOpacity style={styles.startButton} activeOpacity={0.8}>
@@ -49,7 +49,7 @@ export default function HomeScreen() {
         </View>
       </View>
 
-      <Text style={styles.footer}>Toque para iniciar • Powered by Expo</Text>
+      <Text style={styles.footer}>Toque para iniciar • Powered by Jonnywf</Text>
     </LinearGradient>
   );
 }
