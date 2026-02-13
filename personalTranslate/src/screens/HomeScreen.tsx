@@ -35,7 +35,7 @@ export default function HomeScreen() {
 
         <View style={styles.infoRow}>
           <View style={styles.infoItem}>
-            <Ionicons name="cloud-off" size={20} color="#00d4ff" />
+            <Ionicons name="cloud-outline" size={20} color="#00d4ff" />
             <Text style={styles.infoText}>100% Offline</Text>
           </View>
           <View style={styles.infoItem}>
